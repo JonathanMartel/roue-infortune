@@ -20,7 +20,8 @@ class Spinner {
         } else {
             this.nombre = 11;
         }
-        console.log(param);
+        
+        this.finAnimation = true;
         this.creerSpin(param.choix);
     }
 
@@ -29,8 +30,6 @@ class Spinner {
         let svg = '<svg height="20" width="20" viewBox="0 0 20 20">';
         svg += '<circle r="10" cx="10" cy="10" fill="white" stroke-width="0" stroke="black" />';
         choix.forEach(function (element, i, tableau) {
-            
-            
             svg += '<circle class="pointe" r="5" cx="10" cy="10" fill="transparent" transform="rotate(' + ((-360 / tableau.length) * i - (360 / tableau.length)) + ',10,10)" stroke="' + element.couleur + '" stroke-width="10" stroke-dasharray="calc(' + 100 / tableau.length + ' * 31.42 / 100) 31.42"/>';
         });
         this.insertion.innerHTML = svg;
@@ -41,25 +40,20 @@ class Spinner {
             '</g>' +
             '</svg>';
         
-        
         this.insertion.innerHTML += fleche;
         let dom_fleche  = document.querySelector(".fleche");
-        
-        
         dom_fleche.addEventListener("animationend", ()=>{
+                this.finAnimation = true;
                 dom_fleche.classList.remove("rotation");
                 document.documentElement.style.setProperty('--rot-debut', this.rot_fin+'deg');
-                
-                
+
                 let deltaAngle = 360/this.nombre;
-                
                 let pointe = Math.floor((180-this.rot_fin)/deltaAngle);
                 
                 if(pointe <0) {
                     pointe = this.nombre - (-1*pointe);
                 }
-                
-                
+                                
                 let msg_choix=document.querySelector(".choix");
                 msg_choix.firstElementChild.innerHTML = this.choix[pointe].label;
                 msg_choix.classList.add("montrer");
@@ -72,114 +66,27 @@ class Spinner {
             });
         
         document.querySelector(".roue").addEventListener('click', ()=>{
+            if(this.finAnimation){
+                this.finAnimation = false;
+                this.rot_fin = Math.random()*360;
             
-            this.rot_fin = Math.random()*360;
+                document.documentElement.style.setProperty('--rot-fin', +(this.rot_fin+3600)+'deg');
+                
+                dom_fleche.style.animation = 'none';
+                dom_fleche.offsetHeight; /* trigger reflow */
+                dom_fleche.style.animation = null;     
+                
+                dom_fleche.classList.add("rotation");
+                let msg_choix=document.querySelector(".choix");
+                msg_choix.classList.remove("montrer");
+            }
             
-            document.documentElement.style.setProperty('--rot-fin', +(this.rot_fin+3600)+'deg');
-            
-            dom_fleche.style.animation = 'none';
-            dom_fleche.offsetHeight; /* trigger reflow */
-            dom_fleche.style.animation = null;     
-            
-            dom_fleche.classList.add("rotation");
-            let msg_choix=document.querySelector(".choix");
-            msg_choix.classList.remove("montrer");
         });
         document.querySelector(".choix").addEventListener('click', ()=>{document.querySelector(".roue").click()});
     }
     
-    demarrerspin(){
-        
-    }
 }
 
-
-(function () {
- window.addEventListener("load", function () {
-    let data = {
-        choix: [
-            {
-                label: '<h1>Vous avez perdu</h1><p>Vous accumulez le remplacement de 3 collègues différents : Une seule préparation, mais 3 plans de cours différents, tant pis pour vous !</p>',
-                couleur: '#FF0000'
-        },
-            {
-                label: '<h1>Vous avez perdu</h1><p>Vous n’aurez qu’une tâche à temps partiel, pour une 7e année d’affilée.</p>',
-                couleur: '#FFaaaa'
-        },
-            {
-                label: '<h1>Vous avez perdu</h1><p>Vous travaillez 125 % à l’automne, de peur de ne rien avoir à l’hiver.</p>',
-                couleur: '#FF0000'
-        },
-            {
-                label: '<h1>Vous avez perdu</h1><p>Vous obtenez un temps plein cette session, mais en combinant des tâches dans 3 cégeps.</p>',
-                couleur: '#FFaaaa'
-        },
-            {
-                label: '<h1>Vous avez perdu</h1><p>Il y a eu une sur-embauche dans votre discipline à la dernière session. Les permanents devront travailler plus et vous n’avez plus de tâche.</p>',
-                couleur: '#FF0000'
-        },
-            {
-                label: '<h1>Vous avez perdu</h1><p>Il y a une baisse de clientèle. Meilleure chance dans quelques années.</p>',
-                couleur: '#FFaaaa'
-        },
-            {
-                label: '<h1>Vous avez gagné!</h1><p>Vous obtenez votre permanence !</p>',
-                couleur: '#00FF00'
-        },
-            {
-                label: '<h1>Vous avez perdu</h1><p>Impossible de scinder la tâche. Elle sera octroyée à quelqu’un d’autre.</p>',
-                couleur: '#FF0000'
-        }
-            ,
-            {
-                label: '<h1>Vous avez perdu</h1><p>Vous vous faites dépasser en ancienneté.</p>',
-                couleur: '#FFaaaa'
-        },
-            {
-                label: '<h1>Vous avez perdu</h1><p>Une charge à temps plein vous est offerte alors que vous en avez accepté une à temps partiel ailleurs.</p>',
-                couleur: '#FF0000'
-        },
-            {
-                label: '<h1>Vous avez perdu</h1><p>Le nouveau remplacement est incompatible avec votre horaire. Il sera octroyé à quelqu’un avec moins d’ancienneté que vous.</p>',
-                couleur: '#FFaaaa'
-        },
-            {
-                label: '<h1>Vous avez perdu</h1><p>Vous obteniez une charge de cours. La session commençait avant-hier.</p>',
-                couleur: '#FF0000'
-        },
-            {
-                label: '<h1>Vous avez perdu</h1><p>Un MED débarque dans votre cégep. Votre poste, ce sera pour une autre fois.</p>',
-                couleur: '#FFaaaa'
-        },
-            {
-                label: '<h1>Vous avez perdu</h1><p>Cette session vous devez travailler à la formation continue, vous n’aurez pas droit à des congés de maladie.</p>',
-                couleur: '#FF0000'
-        },
-            {
-                label: '<h1>Vous avez perdu</h1><p>Votre collègue est en arrêt de travail. Remplacez-le et ajoutez sa correction à la vôtre.</p>',
-                couleur: '#FFaaaa'
-        },
-            {
-                label: '<h1>Vous avez perdu</h1><p>Vous enseignez en première session, plusieurs étudiants lâchent votre cours. Votre Ci et votre salaire diminuent.</p>',
-                couleur: '#FF0000'
-        },
-            {
-                label: '<h1>Vous avez perdu</h1><p>Et non, on n’ouvre pas de poste sur des cours multi ici !</p>',
-                couleur: '#FFaaaa'
-        }
-            
-            
-    ],
-        element: document.querySelector('.roue')
-    }
-
-   
-        let spin = new Spinner(data);
-     
-    });
-
-
-})()
 
 
 /* Sources
