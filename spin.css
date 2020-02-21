@@ -1,0 +1,122 @@
+:root{
+    --rot-debut: 0deg;
+    --rot-fin: 2500deg;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('Roboto-ThinItalic-webfont.eot');
+    src: url('Roboto-ThinItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('Roboto-ThinItalic-webfont.woff') format('woff'),
+         url('Roboto-ThinItalic-webfont.ttf') format('truetype'),
+         url('Roboto-ThinItalic-webfont.svg#RobotoThinItalic') format('svg'); (under the Apache Software License). 
+    font-weight: 200;
+    font-style: italic;
+}
+
+html, body{
+    margin:0px;
+    padding: 0px;
+    text-align: center;
+    font-family: "roboto";
+}
+main{
+    width: 500px;
+    margin:0px auto;
+    overflow: hidden;
+    height: 100vh;
+}
+h1{
+    font-size: 1.5em;
+}
+h2{
+    font-size: 1.3em;
+}
+h3{
+    font-size: 1em;
+}
+
+
+.roue{
+    height: 500px;
+    width: 500px;
+    position: absolute;
+    cursor: pointer;
+}
+svg{
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+.choix{
+    height: 300px;
+    width: 400px;
+    box-sizing: border-box;
+    position: absolute;
+    top:100px;
+    border-style: dashed;
+    border-color: yellow;
+    border-width: 10px;
+    padding: 15px;
+    background-color: rgba(0,0,0,80%);
+    transform: translate(-500px);
+    transition: transform ease-in-out 750ms, opacity linear 750ms;
+    color: white;
+    text-align: center;
+    opacity: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+.choix > div{
+    flex-grow: 1;
+}
+.choix p{
+    font-size: 1.3em;
+
+}
+
+.choix .btnReprendre{
+    min-height: 40px;
+    font-size: 1em;
+}
+.fleche{
+    height: 300px;
+    width: 300px;
+    position: absolute;
+    top:100px;
+    left:50px;
+    transform-origin: 65% 50%;
+    animation-fill-mode: forwards;
+    transform: rotate(var(--rot-debut));
+    
+}
+.rotation{
+    animation-name: spin;
+    animation-duration: 4500ms; /*4500ms;*/
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+    animation-play-state: running;
+}
+@keyframes spin {
+    0% { transform: rotate(var(--rot-debut)); }
+    100% { transform: rotate(var(--rot-fin)); }
+}
+
+.montrer{
+    transform: translate(50px);
+    opacity: 1;
+}
+
+
+.perdant--couleur{
+    color: red;
+}
+
+.gagnant--couleur{
+    color:#00FF00;
+}
+footer{
+    position: fixed;
+    bottom: 0px;
+    text-align: center;
+}
