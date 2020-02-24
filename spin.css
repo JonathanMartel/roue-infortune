@@ -100,11 +100,6 @@ svg{
     animation-play-state: running;
 }
 
-.pointe{
-    color: aqua;
-    transition: all 3s;
-}
-
 
 @keyframes spin {
     0% { transform: rotate(var(--rot-debut)); }
