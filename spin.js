@@ -30,7 +30,10 @@ class Spinner {
         let svg = '<svg height="20" width="20" viewBox="0 0 20 20">';
         svg += '<circle r="10" cx="10" cy="10" fill="white" stroke-width="0" stroke="black" />';
         choix.forEach(function (element, i, tableau) {
-            svg += '<circle class="pointe" r="5" cx="10" cy="10" fill="transparent" transform="rotate(' + ((-360 / tableau.length) * i - (360 / tableau.length)) + ',10,10)" stroke="' + element.couleur + '" stroke-width="10" stroke-dasharray="calc(' + 100 / tableau.length + ' * 31.42 / 100) 31.42"/>';
+            //svg += '<circle class="pointe" r="5" cx="10" cy="10" fill="transparent" transform="rotate(' + ((-360 / tableau.length) * i - (360 / tableau.length)) + ',10,10)" stroke="' + element.couleur + '" stroke-width="10" stroke-dasharray="calc(' + 100 / tableau.length + ' * 31.42 / 100) 31.42"/>';
+            svg += '<circle class="pointe" r="5" cx="10" cy="10" fill="transparent" stroke="' + element.couleur + '" stroke-width="10" stroke-dasharray="calc(' + 100 / tableau.length + ' * 31.42 / 100) 31.42">';
+            svg += '<animateTransform attributeName="transform" attributeType="XML" fill="freeze" type="rotate" from="0,10,10" to="' + (360+(-360 / tableau.length) * i - (360 / tableau.length)) + ',10,10" dur="500ms" repeatCount="1"/>';
+            svg += '</circle>';
         });
         this.insertion.innerHTML = svg;
 
