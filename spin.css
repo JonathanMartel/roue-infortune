@@ -125,3 +125,25 @@ footer{
     text-align: center;
     width: 500px;
 }
+
+
+.instruction{
+    opacity: 0;
+    font-size: 3em;
+    margin: 20vh auto 0;
+    color: #444444;
+    pointer-events: none;
+    transform: translateY(-50%);
+    animation-name: anim_instruction;
+    animation-duration: 8000ms; /*4500ms;*/
+    animation-fill-mode: forwards;
+    
+    animation-play-state: running;
+}
+
+@keyframes anim_instruction {
+    0% { opacity: 0; }
+    90% { opacity: 1; }
+    100% { opacity: 0;}
+    
+}
